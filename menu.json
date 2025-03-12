@@ -1,0 +1,24 @@
+{
+    "secciones": [
+        {
+            "nombre": "Entradas",
+            "imagen_seccion": "https://rayhall88.github.io/menus/img/entradas.jpg",
+            "items": []
+        },
+        {
+            "nombre": "Platos Principales",
+            "imagen_seccion": "https://rayhall88.github.io/menus/img/principales.jpg",
+            "items": []
+        },
+        {
+            "nombre": "Bebidas",
+            "imagen_seccion": "https://rayhall88.github.io/menus/img/bebidas.jpg",
+            "items": []
+        },
+        {
+            "nombre": "Postres",
+            "imagen_seccion": "https://rayhall88.github.io/menus/img/postres.jpg",
+            "items": []
+        }
+    ]
+}
