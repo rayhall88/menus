@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>El Ranchón - Menú</title>
+    <style>
+        /*Ocultar--none o Mostrar--flex*/
+       .menu-item[data-plato="Empanadas Criollas"] {
+       display: flex !important;}
+      
+      
+        /* Estilos generales */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #003366;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 51, 102, 0.1);
+        }
+
+        /* Encabezado */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #66cc99;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #003366;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Secciones del menú - Nueva estructura */
+        .menu-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(102, 204, 153, 0.1);
+            border-radius: 10px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            gap: 15px;
+        }
+
+        .section-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #66cc99;
+        }
+
+        h2 {
+            color: #003366;
+            font-size: 1.8em;
+            border-left: 4px solid #66cc99;
+            padding-left: 15px;
+            transition: all 0.3s ease;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .section-header:hover h2 {
+            color: #66cc99;
+        }
+
+        /* Ítems del menú */
+        .menu-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 10px;
+            transition: all 0.3s ease;
+            gap: 15px;
+        }
+
+        .menu-item:hover {
+            background: rgba(102, 204, 153, 0.2);
+            transform: translateX(10px);
+        }
+
+        .image-price-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+
+        .menu-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #66cc99;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #66cc99;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .menu-item-content {
+            flex: 1;
+        }
+
+        .description {
+            color: #666666;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        /* Contenido colapsable */
+        .menu-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .menu-section.active .menu-content {
+            max-height: 500px;
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #cccccc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-header img {
+                width: 100%;
+                height: auto;
+                max-height: 150px;
+                margin-top: 10px;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Encabezado -->
+        <div class="header">
+            <h1>El Ranchón</h1>
+            <p>🍴 Gastronomía tradicional con sabor auténtico 🍷</p>
+            <p>📞 Reservas: +1 234-567-890 | 📍 Av. del Sabor 123</p>
+        </div>
+
+        <!-- Sección de Entradas -->
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Entradas</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/entradas.jpg" alt="Entradas">
+            </div>
+            <div class="menu-content">
+                <div class="menu-item" data-plato="Empanadas Criollas">
+                    <div class="image-price-container">
+                        <img src="https://rayhall88.github.io/menus/img/rustiko/empanadas.jpg" alt="Empanadas Criollas">
+                        <div class="price">$8.99</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Empanadas Criollas</h3>
+                        <div class="description">Carne cortada a cuchillo con especias tradicionales</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://rayhall88.github.io/menus/img/rustiko/ceviche.jpg" alt="Ceviche de Camarón">
+                        <div class="price">$10.99</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Ceviche de Camarón</h3>
+                        <div class="description">Camarones marinados en limón con cilantro y cebolla morada</div>
+                    </div>
+                </div>
+                <!-- Más items... -->
+            </div>
+        </div>
+
+        <!-- Sección de Platos Principales -->
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Platos Principales</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/principales.jpg" alt="Platos Principales">
+            </div>
+            <div class="menu-content">
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://rayhall88.github.io/menus/img/rustiko/asado.jpg" alt="Asado Premium">
+                        <div class="price">$24.99</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Asado Premium</h3>
+                        <div class="description">Corte especial madurado por 21 días con guarniciones</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://rayhall88.github.io/menus/img/rustiko/pescado.jpg" alt="Pescado a la Parrilla">
+                        <div class="price">$22.99</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Pescado a la Parrilla</h3>
+                        <div class="description">Filete de pescado fresco con salsa de maracuyá</div>
+                    </div>
+                </div>
+                <!-- Más items... -->
+            </div>
+        </div>
+
+        <!-- Sección de Bebidas -->
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Bebidas</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/bebidas.jpg" alt="Bebidas">
+            </div>
+            <div class="menu-content">
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://rayhall88.github.io/menus/img/rustiko/vino.jpg" alt="Vino de la Casa">
+                        <div class="price">$12.99</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Vino de la Casa</h3>
+                        <div class="description">Selección especial Malbec/Cabernet Sauvignon</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://rayhall88.github.io/menus/img/rustiko/jugo.jpg" alt="Jugo Natural">
+                        <div class="price">$5.99</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Jugo Natural</h3>
+                        <div class="description">Jugo de frutas de temporada</div>
+                    </div>
+                </div>              
+                <!-- Más items... -->
+            </div>
+        </div>
+
+        <!-- Pie de página -->
+        <div class="footer">
+            <p>¡Esperamos su visita! 🍷 Horario: 12:00 - 00:00 hrs</p>
+            <p>🌐 www.elranchon.com | 📱 @elranchon_ok</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(section) {
+            section.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
