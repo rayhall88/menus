@@ -1,161 +1,176 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rustiko - Menú Tradicional</title>
     <style>
+      
+        /* Estilos generales */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-image: url('https://rayhall88.github.io/menus/img/rustiko/wood-texture.jpg');
-            background-color: #F5E6D3;
-            color: #4A2C2A;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #003366;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(101, 67, 33, 0.2);
-            padding: 20px;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 51, 102, 0.1);
         }
 
+        /* Encabezado */
         .header {
             text-align: center;
-            padding: 20px;
-            background-color: #6B4423;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            color: #FFF4E6;
+            border-bottom: 3px solid #66cc99;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        .header img {
-            max-width: 200px;
-            margin: 15px 0;
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #003366;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        /* Secciones del menú - Nueva estructura */
         .menu-section {
-            background: #E8D5B5;
-            border: 2px solid #A78B71;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .menu-section.active {
-            background: #D4C1A2;
-            box-shadow: 0 0 15px rgba(107, 68, 35, 0.3);
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(102, 204, 153, 0.1);
+            border-radius: 10px;
         }
 
         .section-header {
-            padding: 15px;
-            background-color: #8B5E3C;
-            color: white;
-            cursor: pointer;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: flex-start;
-            padding-right: 30px;
-        }
-
-        .section-header h2 {
-            margin-right: auto;
+            cursor: pointer;
+            gap: 15px;
         }
 
         .section-header img {
             width: 100px;
             height: 100px;
+            border-radius: 10px;
             object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid #A78B71;
-            margin-left: 25px;
-            order: 2;
-            flex-shrink: 0;
+            border: 2px solid #66cc99;
         }
 
-        .menu-content {
-            padding: 0 15px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-            display: grid;
-            gap: 20px;
+        h2 {
+            color: #003366;
+            font-size: 1.8em;
+            border-left: 4px solid #66cc99;
+            padding-left: 15px;
+            transition: all 0.3s ease;
+            margin: 0;
+            flex-grow: 1;
         }
 
-        .menu-section.active .menu-content {
-            max-height: 2000px;
-            padding: 15px;
+        .section-header:hover h2 {
+            color: #66cc99;
         }
 
-        .section-header::after {
-            content: '▼';
-            font-size: 0.8em;
-            margin-left: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .menu-section.active .section-header::after {
-            transform: rotate(180deg);
-        }
-
+        /* Ítems del menú */
         .menu-item {
             display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 10px;
+            transition: all 0.3s ease;
             gap: 15px;
-            align-items: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            border: 1px solid #D4C1A2;
+        }
+
+        .menu-item:hover {
+            background: rgba(102, 204, 153, 0.2);
+            transform: translateX(10px);
         }
 
         .image-price-container {
-            position: relative;
-            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
         }
 
         .menu-item img {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
             object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #A78B71;
+            border: 2px solid #66cc99;
+            margin-bottom: 8px;
         }
 
         .price {
-            position: absolute;
-            bottom: -10px;
-            right: -10px;
-            background: #6B4423;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            color: #66cc99;
             font-weight: bold;
-            border: 2px solid #A78B71;
+            text-align: center;
         }
 
+        .menu-item-content {
+            flex: 1;
+        }
+
+        .description {
+            color: #666666;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        /* Contenido colapsable */
+        .menu-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+       .menu-section.active .menu-content {
+            max-height: unset; /* Elimina el valor fijo de 500px */
+        }
+
+        /* Pie de página */
         .footer {
             text-align: center;
-            padding: 20px;
-            background-color: #6B4423;
-            border-radius: 10px;
-            margin-top: 20px;
-            color: #FFF4E6;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #cccccc;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            color: #4A2C2A;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        h1 {
-            font-size: 2.5em;
-            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+        .container {
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-header img {
+                width: 100%;
+                height: auto;
+                max-height: 150px;
+                margin-top: 10px;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -163,7 +178,7 @@
         <div class="header">
             <img src="https://rayhall88.github.io/menus/img/rustiko/logo.png" alt="Logo Rustiko">
             <p>🍴 Gastronomía tradicional con sabor auténtico 🍷</p>
-            <p>📞 Reservas: +53 5 4571129 | 📍 27 y 29, 2714 e Argüelles, Cienfuegos</p>
+            <p>📞 Reservas: +53 52994447 +53 5 4571129 | 📍 27 y 29, 2714 e Argüelles, Cienfuegos</p>
 			<a href="https://maps.app.goo.gl/fuEHRvxVY3pRZQmT6" target="_blank">Ver ubicación del Rustiko</a>
         </div>
 
@@ -592,7 +607,7 @@
                     </div>
                     <div class="menu-item-content">
                         <h3>Dona Helada</h3>
-                        <div class="description">3 BOLAS, DONA o PANQUECITO, SIROPE</div>
+                        <div class="description">3 BOLAS, DONA, SIROPE</div>
                     </div>
                 </div>
                 <div class="menu-item">
@@ -630,22 +645,24 @@
 
         <!-- Pie de página -->
         <div class="footer">
-            <p>¡Esperamos su visita! 🍷 Horario: 12:00 - 00:00 hrs</p>
+            <p>¡Esperamos su visita! 🍷 Horario: 08:00 - 22:00 hrs</p>
         </div>
     </div>
 
-    <script>
-        function toggleSection(section) {
-            const isActive = section.classList.contains('active');
-            document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
-            if(!isActive) section.classList.add('active');
-        }
 
-        window.onload = () => {
-            document.querySelectorAll('.menu-section').forEach(section => {
-                section.classList.remove('active');
-            });
-        };
+    <script>
+function toggleSection(section) {
+    const content = section.querySelector('.menu-content');
+    section.classList.toggle('active');
+    
+    if (section.classList.contains('active')) {
+        // Calcular la altura real del contenido
+        content.style.maxHeight = content.scrollHeight + 'px';
+    } else {
+        // Resetear la altura para la transición
+        content.style.maxHeight = '0';
+    }
+}
     </script>
 </body>
 </html>
