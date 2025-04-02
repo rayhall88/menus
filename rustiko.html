@@ -1,221 +1,822 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rustiko - Menú Tradicional</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    .section-header {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-    }
-    .section-header:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    .menu-item-card {
-        border: none;
-        border-radius: 15px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        margin-bottom: 1.5rem;
-    }
-    .menu-item-card:hover {
-        transform: translateY(-5px);
-    }
-    .price-badge {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-        background-color: #28a745 !important;
-    }
-    .collapse-icon {
-        transition: transform 0.3s ease;
-    }
-    .collapsed .collapse-icon {
-        transform: rotate(180deg);
-    }
+      
+        /* Estilos generales */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #003366;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 51, 102, 0.1);
+        }
+
+        /* Encabezado */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #66cc99;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            color: #003366;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Secciones del menú - Nueva estructura */
+        .menu-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(102, 204, 153, 0.1);
+            border-radius: 10px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            gap: 15px;
+        }
+
+        .section-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #66cc99;
+        }
+
+        h2 {
+            color: #003366;
+            font-size: 1.8em;
+            border-left: 4px solid #66cc99;
+            padding-left: 15px;
+            transition: all 0.3s ease;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .section-header:hover h2 {
+            color: #66cc99;
+        }
+
+        /* Ítems del menú */
+        .menu-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 10px;
+            transition: all 0.3s ease;
+            gap: 15px;
+        }
+
+        .menu-item:hover {
+            background: rgba(102, 204, 153, 0.2);
+            transform: translateX(10px);
+        }
+
+        .image-price-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+
+        .menu-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #66cc99;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #66cc99;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .menu-item-content {
+            flex: 1;
+        }
+
+        .description {
+            color: #666666;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        /* Contenido colapsable */
+        .menu-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+       .menu-section.active .menu-content {
+            max-height: unset; /* Elimina el valor fijo de 500px */
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #cccccc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-header img {
+                width: 100%;
+                height: auto;
+                max-height: 150px;
+                margin-top: 10px;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-            <!-- Encabezado -->
-    <div class="header">
-    <img src="https://rayhall88.github.io/menus/img/rustiko/Perm_logo.png" alt="Logo Rustiko">
-    <p>🍴 Gastronomía tradicional con sabor auténtico 🍷</p>
-    <p>📞 Reservas: +53 52994447 +53 5 4571129 | 📍 27 y 29, 2714 e Argüelles, Cienfuegos</p>
-    <a href="https://maps.app.goo.gl/fuEHRvxVY3pRZQmT6" target="_blank">Ver ubicación del Rustiko</a>
-    </div>
-<div class="container py-5">
-    <h1 class="text-center mb-5 display-4">Menú Rustiko</h1>
-    
-    
-    <div class="section-header p-3">
-        <button class="btn btn-link w-100 text-decoration-none d-flex align-items-center justify-content-between" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#collapse-1">
-            <div class="d-flex align-items-center">
-                
-                <img src="https://rayhall88.github.io/menus/img/rustiko/cesticos.jpg" 
-                     alt="Entradas" 
-                     class="me-3" 
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                
-                <h2 class="mb-0">Entradas</h2>
-            </div>
-            <i class="collapse-icon fas fa-chevron-down"></i>
-        </button>
-        
-        <div class="collapse" id="collapse-1">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-                
-            </div>
+        <!-- Encabezado -->
+        <div class="header">
+            <img src="https://rayhall88.github.io/menus/img/rustiko/Perm_logo.png" alt="Logo Rustiko">
+            <p>🍴 Gastronomía tradicional con sabor auténtico 🍷</p>
+            <p>📞 Reservas: +53 52994447 +53 5 4571129 | 📍 27 y 29, 2714 e Argüelles, Cienfuegos</p>
+			<a href="https://maps.app.goo.gl/fuEHRvxVY3pRZQmT6" target="_blank">Ver ubicación del Rustiko</a>
         </div>
-    </div>
-    
-    <div class="section-header p-3">
-        <button class="btn btn-link w-100 text-decoration-none d-flex align-items-center justify-content-between" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#collapse-2">
-            <div class="d-flex align-items-center">
-                
-                <img src="https://rayhall88.github.io/menus/img/rustiko/crema3.jpg" 
-                     alt="Cremas" 
-                     class="me-3" 
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                
-                <h2 class="mb-0">Cremas</h2>
-            </div>
-            <i class="collapse-icon fas fa-chevron-down"></i>
-        </button>
+
         
-        <div class="collapse" id="collapse-2">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-                
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Entradas</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/cesticos.jpg" alt="Entradas">
             </div>
+            <div class="menu-content">
+			
+			
+				
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/vianda_frita._Vbdp_rustiko.jpg" alt="Vianda Frita">
+                        <div class="price">$300.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Vianda Frita</h3>
+                        <div class="description">Vianda Frita</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/cesticos._UAiq_rustiko.jpg" alt="Salchi-Papa">
+                        <div class="price">$600.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Salchi-Papa</h3>
+                        <div class="description">Salchi-Papa</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/cesticos._SAPy_rustiko.jpg" alt="Cesticos de Jamón y Queso">
+                        <div class="price">$600.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Cesticos de Jamón y Queso</h3>
+                        <div class="description">Cesticos de Jamón y Queso</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
         </div>
-    </div>
-    
-    <div class="section-header p-3">
-        <button class="btn btn-link w-100 text-decoration-none d-flex align-items-center justify-content-between" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#collapse-3">
-            <div class="d-flex align-items-center">
-                
-                <img src="https://rayhall88.github.io/menus/img/rustiko/spa3.jpg" 
-                     alt="Pastas" 
-                     class="me-3" 
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                
-                <h2 class="mb-0">Pastas</h2>
+		</div>
+		
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Cremas</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/crema3.jpg" alt="Cremas">
             </div>
-            <i class="collapse-icon fas fa-chevron-down"></i>
-        </button>
+            <div class="menu-content">
+			
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/crema1._qKwW_rustiko.jpg" alt="Crema Virginia">
+                        <div class="price">$200.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Crema Virginia</h3>
+                        <div class="description">Crema Virginia</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/crema2._pn5m_rustiko.jpg" alt="Crema de Queso Gouda">
+                        <div class="price">$300.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Crema de Queso Gouda</h3>
+                        <div class="description">Crema de Queso Gouda</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/crema1._DchN_rustiko.jpg" alt="Crema de Vegetales">
+                        <div class="price">$200.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Crema de Vegetales</h3>
+                        <div class="description">Crema de Vegetales</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+        </div>
+		</div>
+		
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Pastas</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/spa3.jpg" alt="Pastas">
+            </div>
+            <div class="menu-content">
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/spa3._Dcvf_rustiko.jpg" alt="Espagueti de Queso Gouda">
+                        <div class="price">$500.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Espagueti de Queso Gouda</h3>
+                        <div class="description">Espagueti de Queso Gouda</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/spa1._xpxz_rustiko.jpg" alt="Espagueti de Jamón y Queso">
+                        <div class="price">$600.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Espagueti de Jamón y Queso</h3>
+                        <div class="description">Espagueti de Jamón y Queso</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/spa2._SMGj_rustiko.jpg" alt="Espagueti de Chorizo y Queso">
+                        <div class="price">$650.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Espagueti de Chorizo y Queso</h3>
+                        <div class="description">Espagueti de Chorizo y Queso</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/spa2._ppGY_rustiko.jpg" alt="Espagueti Rustiko">
+                        <div class="price">$800.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Espagueti Rustiko</h3>
+                        <div class="description">JAMON, QUESO, CHORIZO Y SORPRESAS</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/spa3._RnAZ_rustiko.jpg" alt="Espagueti a la Amatriciana">
+                        <div class="price">$1000.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Espagueti a la Amatriciana</h3>
+                        <div class="description">PAPADA DE CERDO, PIMENTON Y QUESO</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/spa3._Smbr_rustiko.jpg" alt="Espagueti a la Carbonada">
+                        <div class="price">$1200.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Espagueti a la Carbonada</h3>
+                        <div class="description">LOMO O BACON, LECHE, HUEVO, PIMIENTA, JAMON Y QUESO</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+        </div>
+		</div>
+		
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Hamburguesas</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/ham1.jpg" alt="Hamburguesas">
+            </div>
+            <div class="menu-content">
+			
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/ham1._d8QU_rustiko.jpg" alt="Hamburguesa a Caballo">
+                        <div class="price">$400.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Hamburguesa a Caballo</h3>
+                        <div class="description">PAN, HAMBURGUESA, HUEVO FRITO Y VEJETALES</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/san1._p4BY_rustiko.jpg" alt="Hamburguesa Clásica">
+                        <div class="price">$290.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Hamburguesa Clásica</h3>
+                        <div class="description">PAN, HAMBURGUESA Y VEGETALES</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/ham1._LchW_rustiko.jpg" alt="Hamburguesa King Size">
+                        <div class="price">$1000.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Hamburguesa King Size</h3>
+                        <div class="description">PAN, DOBLE HAMBURGUESA, JAMON, CHORIZO, QUESO Y VEGETALES</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+        </div>
+		</div>
+		
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Sandwich o Emparedados</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/san1.jpg" alt="Sandwich o Emparedados">
+            </div>
+            <div class="menu-content">
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/san1._yzID_rustiko.jpg" alt="Tortilla Natural">
+                        <div class="price">$300.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Tortilla Natural</h3>
+                        <div class="description">Tortilla Natural</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/san1._hPS9_rustiko.jpg" alt="Salchicha">
+                        <div class="price">$230.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Salchicha</h3>
+                        <div class="description">Salchicha</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/san1._ng6j_rustiko.jpg" alt="Salchi-Huevo">
+                        <div class="price">$400.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Salchi-Huevo</h3>
+                        <div class="description">Salchi-Huevo</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/san1._B6c2_rustiko.jpg" alt="Jamón y Huevo">
+                        <div class="price">$400.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Jamón y Huevo</h3>
+                        <div class="description">Jamón y Huevo</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/san1._gEwd_rustiko.jpg" alt="Vegetales y Huevo">
+                        <div class="price">$400.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Vegetales y Huevo</h3>
+                        <div class="description">Vegetales y Huevo</div>
+                    </div>
+                </div>
+				
+				
+			
+				
+			
+				
+			
+				
+			
+				
+        </div>
+		</div>
+		
+        <div class="menu-section" onclick="toggleSection(this)">
+            <div class="section-header">
+                <h2>Agregados</h2>
+                <img src="https://rayhall88.github.io/menus/img/rustiko/agregados.jpg" alt="Agregados">
+            </div>
+            <div class="menu-content">
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/jamon._02Nm_rustiko.jpg" alt="Jamón">
+                        <div class="price">$100.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Jamón</h3>
+                        <div class="description">Jamón</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/salchicha._SM8c_rustiko.jpg" alt="Salchicha">
+                        <div class="price">$100.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Salchicha</h3>
+                        <div class="description">Salchicha</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/chorizo._3wEP_rustiko.jpg" alt="Chorizo">
+                        <div class="price">$150.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Chorizo</h3>
+                        <div class="description">Chorizo</div>
+                    </div>
+                </div>
+				
+				
+			
+                <div class="menu-item">
+                    <div class="image-price-container">
+                        <img src="https://raw.githubusercontent.com/rayhall88/menus/main/img/rustiko/queso._Unbd_rustiko.jpg" alt="Queso Gouda">
+                        <div class="price">$200.00</div>
+                    </div>
+                    <div class="menu-item-content">
+                        <h3>Queso Gouda</h3>
+                        <div class="description">Queso Gouda</div>
+                    </div>
+                </div>
+				
+				
+        </div>
+		</div>
+		
         
-        <div class="collapse" id="collapse-3">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="section-header p-3">
-        <button class="btn btn-link w-100 text-decoration-none d-flex align-items-center justify-content-between" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#collapse-4">
-            <div class="d-flex align-items-center">
-                
-                <img src="https://rayhall88.github.io/menus/img/rustiko/ham1.jpg" 
-                     alt="Hamburguesas" 
-                     class="me-3" 
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                
-                <h2 class="mb-0">Hamburguesas</h2>
-            </div>
-            <i class="collapse-icon fas fa-chevron-down"></i>
-        </button>
-        
-        <div class="collapse" id="collapse-4">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="section-header p-3">
-        <button class="btn btn-link w-100 text-decoration-none d-flex align-items-center justify-content-between" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#collapse-5">
-            <div class="d-flex align-items-center">
-                
-                <img src="https://rayhall88.github.io/menus/img/rustiko/san1.jpg" 
-                     alt="Sandwich o Emparedados" 
-                     class="me-3" 
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                
-                <h2 class="mb-0">Sandwich o Emparedados</h2>
-            </div>
-            <i class="collapse-icon fas fa-chevron-down"></i>
-        </button>
-        
-        <div class="collapse" id="collapse-5">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="section-header p-3">
-        <button class="btn btn-link w-100 text-decoration-none d-flex align-items-center justify-content-between" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#collapse-6">
-            <div class="d-flex align-items-center">
-                
-                <img src="https://rayhall88.github.io/menus/img/rustiko/agregados.jpg" 
-                     alt="Agregados" 
-                     class="me-3" 
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                
-                <h2 class="mb-0">Agregados</h2>
-            </div>
-            <i class="collapse-icon fas fa-chevron-down"></i>
-        </button>
-        
-        <div class="collapse" id="collapse-6">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-                
-            </div>
-        </div>
-    </div>
-    
-</div>
+
         <!-- Pie de página -->
         <div class="footer">
             <p>¡Esperamos su visita! 🍷 Horario: 08:00 - 22:00 hrs</p>
         </div>
     </div>
 
-<script>
-    // Inicializar tooltips
-    document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    })
-</script>
 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+function toggleSection(section) {
+    const content = section.querySelector('.menu-content');
+    section.classList.toggle('active');
+    
+    if (section.classList.contains('active')) {
+        // Calcular la altura real del contenido
+        content.style.maxHeight = content.scrollHeight + 'px';
+    } else {
+        // Resetear la altura para la transición
+        content.style.maxHeight = '0';
+    }
+}
+    </script>
 </body>
 </html>
