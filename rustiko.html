@@ -125,8 +125,16 @@
 
         /* Menu Items */
         .menu-content {
-            padding: 0 1.5rem;
+            padding: 0;
             background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-section.active .menu-content {
+            padding: 0 1.5rem;
+            max-height: 2000px; /* Valor suficiente para contener el contenido */
         }
 
         .menu-item {
@@ -602,24 +610,21 @@
             const content = section.querySelector('.menu-content');
             section.classList.toggle('active');
             
+            // Cerrar otras secciones automáticamente
+            document.querySelectorAll('.menu-section').forEach(otherSection => {
+                if (otherSection !== section && otherSection.classList.contains('active')) {
+                    otherSection.classList.remove('active');
+                    otherSection.querySelector('.menu-content').style.maxHeight = '0';
+                }
+            });
+
+            // Animación suave para la sección clickeada
             if (section.classList.contains('active')) {
                 content.style.maxHeight = content.scrollHeight + 'px';
             } else {
                 content.style.maxHeight = '0';
             }
         }
-
-        // Auto-close other sections when opening a new one
-        document.querySelectorAll('.menu-section').forEach(section => {
-            section.addEventListener('click', () => {
-                document.querySelectorAll('.menu-section').forEach(other => {
-                    if (other !== section && other.classList.contains('active')) {
-                        other.classList.remove('active');
-                        other.querySelector('.menu-content').style.maxHeight = '0';
-                    }
-                });
-            });
-        });
     </script>
 </body>
 </html>
