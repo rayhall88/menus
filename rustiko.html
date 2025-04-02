@@ -6,9 +6,9 @@
     <title>Rustiko - Menú Tradicional</title>
     <style>
         :root {
-            --primary-color: #2A4D69;
-            --accent-color: #4B8F8C;
-            --text-color: #333333;
+            --primary-color: #5D9B9B;  /* Azul más suave */
+            --accent-color: #8FB3B0;   /* Tonos más claros */
+            --text-color: #4A4A4A;
             --background: #F8F9FA;
             --highlight: #FFD700;
             --image-size: 120px;
@@ -61,15 +61,16 @@
             display: inline-block;
             margin-top: 1rem;
             padding: 0.8rem 1.5rem;
-            background: var(--accent-color);
+            background: var(--primary-color);
             color: white;
             text-decoration: none;
             border-radius: 50px;
-            transition: transform 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .header a:hover {
             transform: translateY(-2px);
+            background: #4B8F8C;
         }
 
         /* Menu Sections */
@@ -87,7 +88,7 @@
 
         .section-header {
             padding: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), #365a7a);
+            background: linear-gradient(135deg, var(--primary-color), #7DA6A4);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -100,7 +101,7 @@
             height: var(--image-size);
             border-radius: 12px;
             object-fit: cover;
-            border: 3px solid white;
+            border: 3px solid rgba(255,255,255,0.2);
             flex-shrink: 0;
         }
 
@@ -175,7 +176,7 @@
             bottom: 0;
             right: 0;
             background: rgba(255, 215, 0, 0.95);
-            color: var(--primary-color);
+            color: var(--text-color);
             padding: 0.3rem 0.8rem;
             border-radius: 8px 0 12px 0;
             font-weight: 700;
